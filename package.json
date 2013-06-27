@@ -5,6 +5,7 @@
 	"private": "true",
 	"dependencies": {
 		"mongodb": "*",
-		"mongoose": "*"
+		"mongoose": "*",
+		"express": "3.3.0"
 	}
 }
