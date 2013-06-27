@@ -4,23 +4,27 @@ var http = require('http');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
-exports.ping = function(ip, name) {
+exports.ping = function(host, name) {
 
-    return new Pinger(ip, name);
+    return new Pinger(host, name);
 
 };
 
-function Pinger(ip, name) {
+function Pinger(host, name) {
 
+    // private
     var _timeoutId;
     var _pingResponse, _pingStatusCode, _pingReponseHeaders;
     var _pingSuccess = true;
     var _responseAssertions = [];
-    
     var self = this;
     
+    // public
+    self.host = host;
+    self.name = name;
+    
     self.ping = function() {
-        var pingOptions = {	host: ip };
+        var pingOptions = {	host: host };
         http.request(pingOptions, function(response) {
             var chunks = [], length = 0;
         
