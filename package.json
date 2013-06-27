@@ -1,0 +1,9 @@
+{
+	"name": "pingy",
+	"description": "Simple nodejs utility that pings our environments and reports status",
+	"version": "0.1.0",
+	"private": "true",
+	"dependencies": {
+		"mongodb": "*"
+	}
+}
