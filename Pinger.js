@@ -75,7 +75,7 @@ function Pinger(ip, name) {
     
     var pingFailed = function() {
         _pingSuccess = false;
-        self.emit('failed');
+        self.emit('failure');
     };
     var pingSuccess = function() {
         self.emit('success');
