@@ -17,11 +17,8 @@ app.configure(function() {
 });
 
 app.get('/', function(request, response) {
-
 	var envStatus = buildEnvironmentStatus();
-
 	response.render('index', { environmentsStatus: envStatus });
-
 });
 
 function buildEnvironmentStatus() {
@@ -29,15 +26,22 @@ function buildEnvironmentStatus() {
 	var environments = ['UAT', 'PEGASUS', 'ORION', 'CRUX'];
 	environments.forEach(function(env, ind) {
 		var lastUpDate;
-		var envStatus = PingSchema.findOne({environment:env}).sort('timestamp').limit(1);
-		if (envStatus.status == false)
-			lastUpDate = PingSchema.findOne({environment:env}).where('status').equals(true).sort(timestamp);
-		environmentsStatus.push({
-			environment: env,
-			status: envStatus.status,
-			lastUpDate: lastUpDate
-		});
+		PingSchema.find()
+			.where('environment').equals(env)
+			.sort('timestamp')
+			.limit(1)
+			.exec(function(err, results) {
+				var envStatus = results[0];
+				// if (envStatus.status == false)
+				// 	lastUpDate = PingSchema.find({environment:env}).where('status').equals(true).sort(timestamp);
+				environmentsStatus.push({
+					environment: env,
+					status: envStatus.status,
+					lastUpDate: lastUpDate
+				});
+			});
 	});
+	return environmentsStatus;
 }
 
 app.listen('8080');
