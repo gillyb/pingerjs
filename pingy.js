@@ -1,4 +1,3 @@
-
 // ping utility for environments
 
 var Pinger = require('./Pinger');
