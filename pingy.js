@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/pingyjs');
 var pingSchema = mongoose.Schema({
 	host: String,
 	environment: String,
-	timestamp: { type:Date, default:Date.now },
+	timestamp: { type:Number, default:function() { return new Date().getTime(); } },
 	status: Boolean
 });
 var PingSchema = mongoose.model('Ping', pingSchema);
@@ -19,8 +19,8 @@ function reportPingResult(status, host, name) {
 		status: status=='success' ? true : false
 	});
 	pingStatus.save(function(err) {
-		console.log('Error saving ping status');
-		console.log(err);
+		if (err)
+			console.log('Error saving ping output : ' + err);
 	});
 }
 
