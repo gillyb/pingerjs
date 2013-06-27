@@ -8,3 +8,4 @@ var Pinger = require('./Pinger');
 //Pinger.ping('127.0.0.1').repeat(5000).assert().regex('<body id="product-page">');
 
 Pinger.ping('www.shopyourway.com', 'localhost').repeat(3000).responseCode(200);
+Pinger.ping('uat.shopyourway.com', 'uat').repeat(2000).responseCode(200);

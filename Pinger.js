@@ -2,6 +2,7 @@
 
 var http = require('http');
 var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 
 exports.ping = function(ip, name) {
 
@@ -19,8 +20,6 @@ function Pinger(ip, name) {
     var self = this;
     
     self.ping = function() {
-        console.log('pinging : ' + ip + ' (' + name + ')');
-        
         var pingOptions = {	host: ip };
         http.request(pingOptions, function(response) {
             var chunks = [], length = 0;
@@ -76,16 +75,17 @@ function Pinger(ip, name) {
     
     var pingFailed = function() {
         _pingSuccess = false;
-        console.log('ping to ' + ip + ' (' + name + ') failed');
+        self.emit('failed');
     };
     var pingSuccess = function() {
-        console.log('ping to ' + ip + ' (' + name + ') success');
+        self.emit('success');
     };
     
     self.ping();
 
 }
 
+Pinger.prototype.__proto__ = EventEmitter.prototype;
 
 function combineChunks(chunks, length) {
     var buf = new Buffer(length);
