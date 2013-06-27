@@ -6,6 +6,7 @@
 	"dependencies": {
 		"mongodb": "*",
 		"mongoose": "*",
-		"express": "3.3.0"
+		"express": "3.3.0",
+		"jade": "*"
 	}
 }
