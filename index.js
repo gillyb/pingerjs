@@ -1,4 +1,5 @@
 
+var async = require('async');
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
@@ -17,20 +18,23 @@ app.configure(function() {
 });
 
 app.get('/', function(request, response) {
-	var envStatus = buildEnvironmentStatus();
-	response.render('index', { environmentsStatus: envStatus });
-});
-
-function buildEnvironmentStatus() {
+	
 	var environmentsStatus = [];
 	var environments = ['UAT', 'PEGASUS', 'ORION', 'CRUX'];
+	var waiting = 0;
 	environments.forEach(function(env, ind) {
+		waiting++;
 		var lastUpDate;
 		PingSchema.find()
 			.where('environment').equals(env)
 			.sort('timestamp')
 			.limit(1)
 			.exec(function(err, results) {
+				if (err) {
+					waiting--;
+					console.log(err.message);
+				}
+				
 				var envStatus = results[0];
 				// if (envStatus.status == false)
 				// 	lastUpDate = PingSchema.find({environment:env}).where('status').equals(true).sort(timestamp);
@@ -39,9 +43,11 @@ function buildEnvironmentStatus() {
 					status: envStatus.status,
 					lastUpDate: lastUpDate
 				});
+
+				if (--waiting == 0)
+					response.render('index', { environmentsStatus: environmentsStatus });
 			});
 	});
-	return environmentsStatus;
-}
+});
 
 app.listen('8080');
