@@ -2,10 +2,7 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
-
-mongoose.connect('mongodb://localhost/pingyjs');
-require('./models.js');
-PingSchema = mongoose.model('Ping');
+var data = require('./data.js');
 
 app.configure(function() {
 	app.set('view engine', 'jade');
@@ -23,29 +20,15 @@ app.get('/', function(request, response) {
 	var waiting = 0;
 	environments.forEach(function(env, ind) {
 		waiting++;
-		var lastUpDate;
-		PingSchema.find()
-			.where('environment').equals(env)
-			.sort('timestamp')
-			.limit(1)
-			.exec(function(err, results) {
-				if (err) {
-					waiting--;
-					console.log(err.message);
-				}
 
-				var envStatus = results[0];
-				// if (envStatus.status == false)
-				// 	lastUpDate = PingSchema.find({environment:env}).where('status').equals(true).sort(timestamp);
-				environmentsStatus.push({
-					environment: env,
-					status: envStatus.status,
-					lastUpDate: lastUpDate
-				});
+		data.getEnvironmentStatus(env, function(data) {
+			environmentsStatus.push(data);
+			if (--waiting == 0) {
+				console.log(environmentsStatus);
+				response.render('index', { environmentsStatus: environmentsStatus });
+			}
+		});
 
-				if (--waiting == 0)
-					response.render('index', { environmentsStatus: environmentsStatus });
-			});
 	});
 });
 
