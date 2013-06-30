@@ -1,5 +1,4 @@
 
-var async = require('async');
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
@@ -34,7 +33,7 @@ app.get('/', function(request, response) {
 					waiting--;
 					console.log(err.message);
 				}
-				
+
 				var envStatus = results[0];
 				// if (envStatus.status == false)
 				// 	lastUpDate = PingSchema.find({environment:env}).where('status').equals(true).sort(timestamp);

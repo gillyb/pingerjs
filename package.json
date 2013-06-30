@@ -7,7 +7,6 @@
 		"mongodb": "*",
 		"mongoose": "*",
 		"express": "3.3.0",
-		"jade": "*",
-		"async": "*"
+		"jade": "*"
 	}
 }
