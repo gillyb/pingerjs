@@ -44,3 +44,10 @@ Pinger.ping('orion.shopyourway.com', 'ORION').repeat(pingRate).responseCode(200)
 	.on('success', function() {
 		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
+
+// delete old pings from the mongodb
+setInterval(function() {
+	var now = new Date().getTime();
+	var oneMonthAgo = new Date(now - (1000 * 60 * 60 * 24 * 30)).getTime();
+	dataAccess.deleteOldData(oneMonthAgo);
+}, 1000); // once every hour

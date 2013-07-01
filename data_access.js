@@ -42,6 +42,14 @@ exports.reportStatus = function(env, host, status) {
 	});
 };
 
+exports.deleteOldData = function(timestamp) {
+	PingSchema.find({ timestamp: { $lte: timestamp } }, function(err, docs) {
+		docs.forEach(function (element) {
+			PingSchema.remove({ _id: element._id }).exec();
+		});
+	});
+};
+
 function buildStatus(env, status, lastUpDate) {
 	return {
 		environment: env,
