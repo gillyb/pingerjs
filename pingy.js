@@ -3,6 +3,14 @@
 var Pinger = require('./Pinger');
 var dataAccess = require('./data_access.js');
 
+
+console.log('');
+console.log('');
+console.log('    PLEASE DO NOT CLOSE THIS WINDOW!!    ');
+console.log('');
+console.log('');
+
+
 var pingRate = 60000; // in seconds
 
 Pinger.ping('uat.shopyourway.com', 'UAT').repeat(pingRate).responseCode(200)
