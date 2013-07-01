@@ -6,7 +6,6 @@ require('./models.js');
 PingSchema = mongoose.model('Ping');
 
 exports.getEnvironmentStatus = function(env, callback) {
-
 	PingSchema.find()
 		.where('environment').equals(env)
 		.sort('timestamp')
@@ -23,13 +22,12 @@ exports.getEnvironmentStatus = function(env, callback) {
 					.limit(1)
 					.exec(function(error, result) {
 						var lastUpDate = (result && result[0] && result[0].timestamp) ? result[0].timestamp : null;
-						callback(buildStatus(env, envStatus.status, lastUpDate));
+						callback.call(this, buildStatus(env, envStatus.status, lastUpDate));
 					});
 			else
-				callback(buildStatus(env, envStatus.status, ''));
+				callback.call(this, buildStatus(env, envStatus.status, ''));
 
 		});
-
 };
 
 function buildStatus(env, status, lastUpDate) {
