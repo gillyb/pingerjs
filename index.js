@@ -1,5 +1,4 @@
 
-var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 var dataAccess = require('./data_access.js');
