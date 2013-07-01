@@ -3,7 +3,9 @@
 var Pinger = require('./Pinger');
 var dataAccess = require('./data_access.js');
 
-Pinger.ping('uat.shopyourway.com', 'UAT').repeat(5000).responseCode(200)
+var pingRate = 60000; // in seconds
+
+Pinger.ping('uat.shopyourway.com', 'UAT').repeat(pingRate).responseCode(200)
 	.on('failure', function() {
 		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
@@ -11,7 +13,7 @@ Pinger.ping('uat.shopyourway.com', 'UAT').repeat(5000).responseCode(200)
 		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
-Pinger.ping('pegasus.shopyourway.com', 'PEGASUS').repeat(5000).responseCode(200)
+Pinger.ping('pegasus.shopyourway.com', 'PEGASUS').repeat(pingRate).responseCode(200)
 	.on('failure', function() {
 		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
@@ -19,7 +21,7 @@ Pinger.ping('pegasus.shopyourway.com', 'PEGASUS').repeat(5000).responseCode(200)
 		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
-Pinger.ping('crux.shopyourway.com', 'CRUX').repeat(5000).responseCode(200)
+Pinger.ping('crux.shopyourway.com', 'CRUX').repeat(pingRate).responseCode(200)
 	.on('failure', function() {
 		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
@@ -27,7 +29,7 @@ Pinger.ping('crux.shopyourway.com', 'CRUX').repeat(5000).responseCode(200)
 		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
-Pinger.ping('orion.shopyourway.com', 'ORION').repeat(5000).responseCode(200)
+Pinger.ping('orion.shopyourway.com', 'ORION').repeat(pingRate).responseCode(200)
 	.on('failure', function() {
 		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
