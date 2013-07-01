@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
-var data = require('./data.js');
+var dataAccess = require('./data_access.js');
 
 app.configure(function() {
 	app.set('view engine', 'jade');
@@ -21,7 +21,7 @@ app.get('/', function(request, response) {
 	environments.forEach(function(env, ind) {
 		waiting++;
 
-		data.getEnvironmentStatus(env, function(data) {
+		dataAccess.getEnvironmentStatus(env, function(data) {
 			environmentsStatus.push(data);
 			if (--waiting == 0) {
 				console.log(environmentsStatus);
