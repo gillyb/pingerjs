@@ -30,6 +30,18 @@ exports.getEnvironmentStatus = function(env, callback) {
 		});
 };
 
+exports.reportStatus = function(env, host, status) {
+	var pingStatus = new PingSchema({ 
+		host: host,
+		environment: env,
+		status: status == 'success' ? true : false
+	});
+	pingStatus.save(function(err) {
+		if (err)
+			console.log('Error saving ping output : ' + err);
+	});
+};
+
 function buildStatus(env, status, lastUpDate) {
 	return {
 		environment: env,

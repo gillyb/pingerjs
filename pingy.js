@@ -1,52 +1,36 @@
 // ping utility for environments
 
 var Pinger = require('./Pinger');
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/pingyjs');
-require('./models.js');
-PingSchema = mongoose.model('Ping');
-
-function reportPingResult(status, host, name) {
-	var pingStatus = new PingSchema({ 
-		host: host,
-		environment: name,
-		status: status=='success' ? true : false
-	});
-	pingStatus.save(function(err) {
-		if (err)
-			console.log('Error saving ping output : ' + err);
-	});
-}
+var dataAccess = require('./data_access.js');
 
 Pinger.ping('uat.shopyourway.com', 'UAT').repeat(5000).responseCode(200)
 	.on('failure', function() {
-		reportPingResult('failure', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
 	.on('success', function() {
-		reportPingResult('success', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
 Pinger.ping('pegasus.shopyourway.com', 'PEGASUS').repeat(5000).responseCode(200)
 	.on('failure', function() {
-		reportPingResult('failure', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
 	.on('success', function() {
-		reportPingResult('success', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
 Pinger.ping('crux.shopyourway.com', 'CRUX').repeat(5000).responseCode(200)
 	.on('failure', function() {
-		reportPingResult('failure', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
 	.on('success', function() {
-		reportPingResult('success', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
 
 Pinger.ping('orion.shopyourway.com', 'ORION').repeat(5000).responseCode(200)
 	.on('failure', function() {
-		reportPingResult('failure', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'failure');
 	})
 	.on('success', function() {
-		reportPingResult('success', this.host, this.name);
+		dataAccess.reportStatus(this.name, this.host, 'success');
 	});
