@@ -42,8 +42,11 @@ function Pinger(host, name) {
                 });
             });
             
+        }).on('error', function(error) {
+            console.log("\n\nError :: " + error + "\n\n");
+            pingFailed();
         }).end();
-            
+
         return self;
     };
     
