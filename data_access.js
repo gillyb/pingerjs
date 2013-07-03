@@ -13,7 +13,7 @@ exports.getEnvironmentStatus = function(env, callback) {
 		.exec(function(err, results) {
 
 			if (results.length == 0) {
-				callback.call(this, buildStatus(env, false, null));
+				callback.call(this, buildStatus(env, false, null, null));
 				return;
 			}
 
@@ -27,10 +27,10 @@ exports.getEnvironmentStatus = function(env, callback) {
 					.limit(1)
 					.exec(function(error, result) {
 						var lastUpDate = (result && result[0] && result[0].timestamp) ? result[0].timestamp : null;
-						callback.call(this, buildStatus(env, envStatus.status, lastUpDate));
+						callback.call(this, buildStatus(env, envStatus.status, envStatus.timestamp, lastUpDate));
 					});
 			else
-				callback.call(this, buildStatus(env, envStatus.status, ''));
+				callback.call(this, buildStatus(env, envStatus.status, envStatus.timestamp, ''));
 
 		});
 };
@@ -55,10 +55,11 @@ exports.deleteOldData = function(timestamp) {
 	});
 };
 
-function buildStatus(env, status, lastUpDate) {
+function buildStatus(env, status, timestamp, lastUpDate) {
 	return {
 		environment: env,
 		status: status,
+		timestamp: new Date(timestamp).toLocaleTimeString(),
 		lastUpDate: lastUpDate
 	};
 }
