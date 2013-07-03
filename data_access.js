@@ -8,7 +8,7 @@ PingSchema = mongoose.model('Ping');
 exports.getEnvironmentStatus = function(env, callback) {
 	PingSchema.find()
 		.where('environment').equals(env)
-		.sort('timestamp')
+		.sort('-timestamp')
 		.limit(1)
 		.exec(function(err, results) {
 

@@ -5,9 +5,7 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
 exports.ping = function(host, name) {
-
     return new Pinger(host, name);
-
 };
 
 function Pinger(host, name) {
