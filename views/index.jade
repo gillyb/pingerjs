@@ -1,8 +1,17 @@
 html
 	head
 		title Environment Status
+		link(rel="stylesheet", type="text/css", href="main.css")
 	body
-		h1 Environment Status
-		each envStatus in environmentsStatus
-			span #{envStatus.environment} :: #{envStatus.status}
-			br
+		div#container
+			h1 Environment Status
+
+			each envStatus in environmentsStatus
+				div.environment
+					- var status = (envStatus.status) ? 'up' : 'down'
+					span(class="status #{status}")
+					span.title
+						=envStatus.environment
+						br
+						span.details
+							| Last updated: #{envStatus.lastUpDate}

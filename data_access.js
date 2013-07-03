@@ -12,6 +12,11 @@ exports.getEnvironmentStatus = function(env, callback) {
 		.limit(1)
 		.exec(function(err, results) {
 
+			if (results.length == 0) {
+				callback.call(this, buildStatus(env, false, null));
+				return;
+			}
+
 			var envStatus = results[0];
 
 			if (envStatus.status == false)

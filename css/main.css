@@ -1,0 +1,13 @@
+
+* { font-family:'lucida grande', 'tahoma', 'verdana', 'arial'; }
+h1 { font-weight:bold; font-size:20px; }
+
+.details { color:#808080; font-size:11px; font-weight:normal; margin-left:26px; }
+
+#container { width:1000px; margin:0 auto; }
+
+.environment { display:inline-block; width:250px; height:250px; }
+.environment .status { display:inline-block; width:18px; height:14px; margin:3px; background-repeat:no-repeat; vertical-align:middle; }
+.environment .status.up { background-image:url('status_up.png'); }
+.environment .status.down { background-image:url('status_down.png'); }
+.environment .title { font-size:14px; font-weight:bold; }
